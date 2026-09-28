@@ -2,13 +2,21 @@ package com.rdn.dtf.tools;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.os.Build;
 import android.net.Uri;
 import android.content.Intent;
+import android.content.ContentValues;
+import android.provider.MediaStore;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.webkit.ValueCallback;
+import android.webkit.JavascriptInterface;
+import android.widget.Toast;
+import android.util.Base64;
+
+import java.io.OutputStream;
 
 public class MainActivity extends Activity {
 
@@ -28,6 +36,11 @@ public class MainActivity extends Activity {
         settings.setDomStorageEnabled(true);
         settings.setAllowFileAccess(true);
         settings.setAllowContentAccess(true);
+
+        webView.addJavascriptInterface(
+                new AndroidBridge(),
+                "RDNAndroid"
+        );
 
         webView.setWebViewClient(new WebViewClient());
 
@@ -51,41 +64,4 @@ public class MainActivity extends Activity {
                     );
                     return true;
                 } catch (Exception e) {
-                    fileCallback = null;
-                    return false;
-                }
-            }
-        });
-
-        webView.loadUrl("file:///android_asset/index.html");
-    }
-
-    @Override
-    protected void onActivityResult(
-            int requestCode,
-            int resultCode,
-            Intent data) {
-
-        super.onActivityResult(requestCode, resultCode, data);
-
-        if (requestCode == FILE_CHOOSER && fileCallback != null) {
-            Uri[] results =
-                    WebChromeClient.FileChooserParams.parseResult(
-                            resultCode,
-                            data
-                    );
-
-            fileCallback.onReceiveValue(results);
-            fileCallback = null;
-        }
-    }
-
-    @Override
-    public void onBackPressed() {
-        if (webView.canGoBack()) {
-            webView.goBack();
-        } else {
-            super.onBackPressed();
-        }
-    }
-}
+                    file
