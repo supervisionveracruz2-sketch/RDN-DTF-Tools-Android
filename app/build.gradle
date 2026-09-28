@@ -1,0 +1,16 @@
+plugins {
+    id 'com.android.application'
+}
+
+android {
+    namespace 'com.rdn.dtf.tools'
+    compileSdk 35
+
+    defaultConfig {
+        applicationId 'com.rdn.dtf.tools'
+        minSdk 23
+        targetSdk 35
+        versionCode 35
+        versionName '35.0'
+    }
+}
