@@ -28,7 +28,7 @@ jobs:
       - name: Copiar RDN DTF v35 dentro de la app
         run: |
           mkdir -p app/src/main/assets
-          cp RDN_DTF_Tools_v35.html app/src/main/assets/index.html
+          cp RDN_DTF_Tools_v35-2.html app/src/main/assets/index.html
 
       - name: Construir APK
         run: gradle assembleDebug
