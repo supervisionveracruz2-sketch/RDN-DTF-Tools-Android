@@ -4,7 +4,7 @@
 
     <application
         android:theme="@style/AppTheme"
-        android:label="RDN DTF v35"
+        android:label="RDN DTF Tools"
         android:usesCleartextTraffic="true">
 
         <activity
