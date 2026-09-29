@@ -1,0 +1,455 @@
+<!doctype html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1"><title>RDN DTF Tools v36.27 STABLE</title><style>
+:root{font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;color-scheme:dark}*{box-sizing:border-box}body{margin:0;background:#0b0d11;color:#f5f7fa}header{padding:16px;background:#131722;position:sticky;top:0;z-index:3;border-bottom:1px solid #293042}h1{font-size:20px;margin:0}.sub,.tiny,.status{font-size:12px;color:#aab3c3}.wrap{max-width:780px;margin:auto;padding:12px}.card{background:#171b24;border:1px solid #293042;border-radius:16px;padding:14px;margin-bottom:12px}label{display:block;font-size:13px;color:#d0d6e0;margin:10px 0 5px}.row{display:grid;grid-template-columns:1fr 1fr;gap:9px}button,.file{border:0;border-radius:12px;padding:12px;font-weight:750;background:#267cff;color:#fff;width:100%}button.secondary{background:#282e3a}.seg{display:flex;gap:8px}.seg button{background:#282e3a}.seg button.active{background:#267cff}input[type=file]{display:none}input[type=range]{width:100%}input[type=number],select{width:100%;padding:10px;border-radius:10px;border:1px solid #343c4c;background:#10131a;color:white}.value{float:right;color:#fff}.preview{min-height:340px;border-radius:14px;overflow:auto;display:grid;place-items:center;background:#111}.preview.checker{background-color:#222;background-image:linear-gradient(45deg,#353535 25%,transparent 25%),linear-gradient(-45deg,#353535 25%,transparent 25%),linear-gradient(45deg,transparent 75%,#353535 75%),linear-gradient(-45deg,transparent 75%,#353535 75%);background-size:24px 24px;background-position:0 0,0 12px,12px -12px,-12px 0}.preview.white{background:#fff}.preview.black{background:#000}canvas{max-width:100%;height:auto;display:block}.tabs{display:grid;grid-template-columns:repeat(3,1fr);gap:7px}.tabs button{padding:9px;background:#282e3a;font-size:12px}.tabs button.active{background:#267cff}.compareWrap{position:relative;overflow:hidden;border-radius:14px;background:#111;touch-action:none;height:520px;display:flex;align-items:center;justify-content:center}.compareViewport{position:absolute;inset:0;overflow:hidden;touch-action:none}.compareStage{position:absolute;left:0;top:0;transform-origin:0 0;will-change:transform}.compareStage canvas{position:absolute;left:0;top:0;max-width:none;width:100%;height:100%}.compareWrap.checker{background-color:#222;background-image:linear-gradient(45deg,#353535 25%,transparent 25%),linear-gradient(-45deg,#353535 25%,transparent 25%),linear-gradient(45deg,transparent 75%,#353535 75%),linear-gradient(-45deg,transparent 75%,#353535 75%);background-size:24px 24px;background-position:0 0,0 12px,12px -12px,-12px 0}.compareStage #beforeCanvas{clip-path:inset(0 50% 0 0)}.compareLine{position:absolute;top:0;bottom:0;left:50%;width:2px;background:#fff;box-shadow:0 0 0 1px #0008;pointer-events:none}.compareTag{position:absolute;top:8px;padding:5px 8px;border-radius:8px;background:#000a;font-size:11px;font-weight:700;pointer-events:none}.compareTag.before{left:8px}.compareTag.after{right:8px}.zoomrow{display:grid;grid-template-columns:auto 1fr auto;gap:8px;align-items:center;margin-top:9px}.compareActions{display:grid;grid-template-columns:repeat(4,1fr);gap:7px;margin-top:8px}.compareActions button{padding:9px;font-size:12px}.zoomrow button{padding:9px}.compareRange{width:100%}.editWrap{position:relative;border-radius:14px;overflow:hidden;background-color:#222;background-image:linear-gradient(45deg,#353535 25%,transparent 25%),linear-gradient(-45deg,#353535 25%,transparent 25%),linear-gradient(45deg,transparent 75%,#353535 75%),linear-gradient(-45deg,transparent 75%,#353535 75%);background-size:24px 24px;background-position:0 0,0 12px,12px -12px,-12px 0;touch-action:none}.editWrap canvas{width:100%;height:auto;touch-action:none}.brushBtns{display:grid;grid-template-columns:1fr 1fr;gap:8px}.brushBtns button.active{background:#267cff}.brushBtns button:not(.active){background:#282e3a}.editActions{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:8px}.editWrap{height:520px;position:relative;overflow:hidden;touch-action:none;display:block}.editViewport{position:absolute;inset:0;overflow:hidden;touch-action:none}.editStage{position:absolute;left:0;top:0;transform-origin:0 0;will-change:transform}.editStage canvas{position:absolute;left:0;top:0;max-width:none;width:100%;height:100%}.brushCursor{position:absolute;border:2px solid #fff;border-radius:50%;box-shadow:0 0 0 1px #000;pointer-events:none;display:none;z-index:5}.editTools{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;margin-top:8px}.editTools button{padding:9px;font-size:12px}.editZoomRow{display:grid;grid-template-columns:auto 1fr auto;gap:8px;align-items:center;margin-top:9px}.editActions{grid-template-columns:repeat(3,1fr)}
+</style></head><body>
+<header><h1>RDN DTF Tools <small>v36.31 STABLE</small></h1><div class="sub">Preprensa DTF PRO · semitono configurable · underbase · gang sheet · mockup</div></header><div class="wrap">
+<div class="card"><div class="row"><button id="openFile">📁 Abrir archivo</button><button id="openGallery" class="secondary">🖼️ Galería</button></div><input id="file" type="file" accept="image/png,image/jpeg,image/webp,application/octet-stream"><input id="gallery" type="file" accept="image/*"><div class="tiny" style="margin-top:8px">Abrir archivo intenta usar Archivos / Descargas. Galería abre el selector de imágenes.</div><div id="info" class="status">Ninguna imagen cargada.</div></div>
+<div class="card"><label>Color de prenda</label><div class="seg"><button id="black" class="active">⚫ Negra</button><button id="white">⚪ Blanca</button></div>
+<div class="row" style="grid-template-columns:repeat(4,1fr);margin-top:8px"><button class="secondary colorQuick" data-color="#d71920">🔴 Roja</button><button class="secondary colorQuick" data-color="#1357b8">🔵 Azul</button><button class="secondary colorQuick" data-color="#168447">🟢 Verde</button><button class="secondary colorQuick" data-color="#777777">🩶 Gris</button></div>
+<div class="row" style="margin-top:8px"><select id="garmentColor"><option value="#000000">⚫ Negra</option><option value="#ffffff">⚪ Blanca</option><option value="#d71920">🔴 Roja</option><option value="#1357b8">🔵 Azul</option><option value="#168447">🟢 Verde</option><option value="#f0c419">🟡 Amarilla</option><option value="#777777">🩶 Gris</option><option value="custom">🎨 Personalizado</option></select><div id="customWrap" style="display:none"><input id="customColor" type="color" value="#6b2aa6" style="width:100%;height:42px;border:0;border-radius:10px;background:#10131a"></div></div>
+<button id="autoGarment" style="margin-top:10px">✨ DTF Automático · Color elegido</button><div class="tiny" style="margin-top:7px">V26: limpieza inteligente de puntos seguros. Conserva semitono, letras, fuego y detalles conectados.</div><label>Eliminar color base <span id="thrV" class="value">38</span></label><input id="thr" type="range" min="0" max="180" value="38">
+<label>Transición / degradado <span id="softV" class="value">42</span></label><input id="soft" type="range" min="1" max="140" value="42">
+<label>Tamaño de trama <span id="dotV" class="value">6 px</span></label><input id="dot" type="range" min="1" max="24" value="6">
+<label>Fuerza del semitono <span id="halfV" class="value">75%</span></label><input id="half" type="range" min="0" max="100" value="75">
+<div class="tiny">Negra elimina tonos oscuros; blanca elimina tonos claros. La transición evita bordes duros y la trama perfora las zonas intermedias.</div><div id="printGuard" class="status" style="margin-top:8px;padding:9px;border-radius:9px;background:#10131a">🛡️ Seguro DTF activo: calculando trama física…</div></div>
+<div class="card"><div style="margin-bottom:10px"><button id="autoPro">⚙️ Ajustar PRO automáticamente</button><div id="autoProStatus" class="status" style="margin-top:7px">Analiza el diseño y configura trama, tono, anti-halo y underbase.</div></div><label>⚙️ Semitono PRO</label><div class="row"><div><label>LPI <span id="lpiV" class="value">45</span></label><input id="lpi" type="range" min="20" max="85" value="45"></div><div><label>Ángulo <span id="angleV" class="value">22.5°</span></label><input id="angle" type="range" min="0" max="90" step="0.5" value="22.5"></div></div><label>Forma de punto</label><select id="dotShape"><option value="round">● Redondo</option><option value="ellipse">⬭ Elíptico</option><option value="square">■ Cuadrado</option><option value="diamond">◆ Diamante</option><option value="line">▰ Línea</option></select><div class="row"><div><label>Nivel negro <span id="blackLevelV" class="value">0</span></label><input id="blackLevel" type="range" min="0" max="120" value="0"></div><div><label>Nivel blanco <span id="whiteLevelV" class="value">255</span></label><input id="whiteLevel" type="range" min="135" max="255" value="255"></div></div><label>Gamma <span id="gammaV" class="value">1.00</span></label><input id="gamma" type="range" min="40" max="250" value="100"><label>Anti-halo <span id="haloV" class="value">8</span></label><input id="halo" type="range" min="0" max="64" value="8"><div class="tiny">LPI controla frecuencia de trama. Ángulo y forma cambian la geometría. Niveles/Gamma actúan antes del knockout. Anti-halo limpia alfa residual débil.</div></div>
+<div class="card"><label><input id="underbaseEnabled" type="checkbox" style="width:auto;margin-right:8px"> Base blanca / Underbase</label><div class="row"><div><label>Choke / Spread (px)</label><input id="underbase" type="number" min="-12" max="12" value="-2"></div><div><label>Opacidad</label><input id="underOpacity" type="number" min="1" max="100" value="100"></div></div><button id="exportUnderbase" style="margin-top:10px">⬇️ Exportar base blanca PNG</button><div id="underStatus" class="status" style="margin-top:7px">Choke negativo encoge la base; positivo hace spread.</div></div>
+<div class="card"><label>🔎 Upscale</label><div class="row"><select id="upscaleFactor"><option value="2">2×</option><option value="3">3×</option><option value="4">4×</option></select><button id="exportUpscale">⬇️ Exportar upscale</button></div><div class="tiny">Reescalado de alta calidad. No se etiqueta como IA.</div></div>
+<div class="card"><label>🧩 Gang Sheet automático PRO</label><input id="gangFiles" type="file" accept="application/octet-stream,.png,.webp,.jpg,.jpeg" multiple><div class="row"><div><label>Ancho rollo (cm)</label><input id="gangWidth" type="number" value="58" min="10" max="120" step="0.1"></div><div><label>Separación (mm)</label><input id="gangGap" type="number" value="5" min="0" max="30"></div></div><div class="row" style="margin-top:8px"><button id="pickGang" class="secondary">➕ Agregar diseños</button></div><div id="gangStatus" class="status" style="margin-top:7px">Sin diseños cargados.</div><div id="gangPreviewWrap" class="preview checker" style="display:none;min-height:0;margin-top:9px;max-height:420px"><canvas id="gangPreview"></canvas><img id="gangPreviewImg" alt="Vista previa Gang Sheet" style="display:none;max-width:100%;height:auto"></div><button id="buildGang" style="margin-top:8px">🧩 Armar y exportar Gang Sheet</button><div class="tiny" style="margin-top:7px">Acomoda automáticamente los diseños, respeta la separación y calcula el largo antes de exportar.</div></div><div class="card"><label>👕 Mockup Studio</label><div class="row"><select id="mockColor"><option value="#000000">Negra</option><option value="#ffffff">Blanca</option><option value="#777777">Gris</option><option value="#d71920">Roja</option><option value="#1357b8">Azul</option></select><select id="mockSide"><option>Frente</option><option>Espalda</option></select></div><label>Tamaño diseño <span id="mockScaleV" class="value">55%</span></label><input id="mockScale" type="range" min="20" max="85" value="55"><div class="preview" style="min-height:0;margin-top:8px"><canvas id="mockCanvas"></canvas></div><button id="exportMock" style="margin-top:8px">⬇️ Exportar mockup PNG</button></div>
+<div class="card"><label>Vista previa</label><div class="tabs"><button id="pvBlack" class="active">Fondo negro</button><button id="pvWhite">Fondo blanco</button><button id="pvCheck">Transparencia</button></div><div id="preview" class="preview black"><canvas id="canvas"></canvas></div></div>
+<div class="card"><label>✍️ Retoque manual de precisión</label><div class="tiny">🔒 o 🧽 con un dedo. Usa dos dedos en cualquier momento para mover y hacer zoom sin cambiar de herramienta.</div><div class="brushBtns"><button id="protectBrush" class="active">🔒 Proteger</button><button id="eraseBrush" class="secondary">🧽 Transparencia</button></div><div id="cameraReadout" class="status" style="margin-top:7px">Vista fija: 100% · Proteger</div><label>Tamaño del pincel <span id="brushV" class="value">40 px</span></label><input id="brushSize" type="range" min="8" max="160" value="40"><div id="editWrap" class="editWrap" style="margin-top:10px"><div id="editViewport" class="editViewport"><div id="editStage" class="editStage"><canvas id="editCanvas"></canvas></div><div id="brushCursor" class="brushCursor"></div></div></div><div class="editZoomRow"><span class="tiny">Zoom</span><input id="editZoom" type="range" min="100" max="400" step="25" value="100"><button id="editZoomLabel" class="secondary">100%</button></div><div class="editTools"><button id="editFit" class="secondary">↔ Ajustar</button><button id="editOne" class="secondary">1:1</button><button id="editCenter" class="secondary">◎ Centrar</button></div><div class="editActions"><button id="undoBrush" class="secondary">↶ Deshacer</button><button id="redoBrush" class="secondary">↷ Rehacer</button><button id="clearBrush" class="secondary">🗑️ Limpiar</button></div><div id="editStatus" class="status" style="margin-top:8px">Sin retoques manuales.</div></div><div class="card"><label>🔎 Comparar Antes / Después</label><div class="tiny">La imagen inicia completa. Amplía y arrastra con un dedo para recorrer cualquier zona.</div><input id="compareRange" class="compareRange" type="range" min="0" max="100" value="50"><div id="compareWrap" class="compareWrap checker"><div id="compareViewport" class="compareViewport"><div id="compareStage" class="compareStage"><canvas id="afterCanvas"></canvas><canvas id="beforeCanvas"></canvas><div id="compareLine" class="compareLine"></div><div class="compareTag before">ANTES</div><div class="compareTag after">DESPUÉS</div></div></div></div><div class="zoomrow"><span class="tiny">Zoom</span><input id="zoom" type="range" min="100" max="400" step="25" value="100"><button id="zoomLabel" class="secondary">100%</button></div><div class="compareActions"><button id="fitBtn" class="secondary">↔ Ajustar</button><button id="oneBtn" class="secondary">1:1</button><button id="centerBtn" class="secondary">◎ Centrar</button><button id="compareBg" class="secondary">◩ Fondo</button></div></div>
+<div class="card"><label>🔬 Inspector DTF · V34</label><div class="tiny">Analiza el PNG procesado antes de exportar. Es una guía visual, no sustituye una prueba física ni el RIP de impresión.</div><button id="inspectBtn" style="margin-top:10px">🔎 Analizar diseño</button><div id="inspectSummary" class="status" style="margin-top:9px">Sin analizar.</div><div id="inspectItems" style="display:grid;gap:7px;margin-top:8px"></div><div id="issuePanel" style="display:none;margin-top:10px"><div class="row"><button id="issueIsolated" class="secondary">🟡 Puntos aislados</button><button id="issueFine" class="secondary">🔎 Detalle fino</button></div><div class="row" style="margin-top:7px"><button id="issuePartial" class="secondary">💧 Alfa parcial</button><button id="issueClear" class="secondary">✕ Ocultar marcas</button></div><div class="tiny" id="issueLegend" style="margin:8px 0">Toca una categoría para localizarla sobre el diseño.</div><div class="preview checker" style="min-height:0"><canvas id="issueCanvas" style="touch-action:manipulation"></canvas></div><div id="surgeryPanel" style="display:none;margin-top:10px;padding:10px;border-radius:12px;background:#10131a"><b>🎯 Revisión de punto</b><div class="tiny" id="surgeryInfo" style="margin:5px 0 8px">Toca una marca roja del mapa.</div><div class="preview checker" style="min-height:0;max-height:260px"><canvas id="surgeryCanvas"></canvas></div><div class="row" style="margin-top:8px"><button id="surgeryDelete" class="secondary">🗑 Eliminar</button><button id="surgeryProtect" class="secondary">🔒 Proteger</button></div><button id="surgeryIgnore" class="secondary" style="margin-top:7px">👁 Ignorar esta marca</button></div></div></div><div class="card"><label>🧹 Limpieza inteligente</label><div class="tiny">Elimina únicamente píxeles totalmente sueltos. No borra grupos conectados, puntos normales del semitono, letras, fuego ni bordes unidos al diseño.</div><button id="safeClean" style="margin-top:10px">🧹 Limpiar puntos seguros</button><div id="cleanStatus" class="status" style="margin-top:8px">Desactivada · el PNG no se modifica.</div><button id="safeCleanOff" class="secondary" style="margin-top:8px">↩️ Desactivar limpieza</button></div><div class="card"><div class="row"><div><label>Ancho final (cm)</label><input id="cm" type="number" value="25" min="1" step="0.1"></div><div><label>Alto final (cm)</label><input id="cmH" type="number" placeholder="Automático" min="1" step="0.1"></div></div><label>DPI</label><select id="dpi"><option>300</option><option>150</option></select><div class="tiny" style="margin-top:7px">Deja Alto vacío para conservar el comportamiento proporcional. Escribe un alto para crear un lienzo exacto sin deformar el diseño.</div><div id="outInfo" class="status"></div><button id="download" style="margin-top:12px">⬇️ Descargar PNG RGBA para impresión</button><div id="exportStatus" class="status" style="margin-top:9px;padding:10px;border-radius:10px;background:#10131a">Aún no has exportado en esta sesión.</div><div class="row" style="margin-top:8px"><button id="verifyLast" class="secondary">✅ Verificar último exportado</button><button id="verifySaved" class="secondary">📂 Verificar archivo guardado</button></div><input id="verifyFile" type="file" accept="image/png,.png,application/octet-stream"><div class="tiny" style="margin-top:7px">V35 verifica firma PNG, color RGBA, dimensiones, DPI y transparencia. El archivo de salida siempre empieza con <b>RDN_DTF_PRINT_</b> para distinguirlo del original.</div><button id="reset" class="secondary" style="margin-top:8px">Restablecer ajustes</button></div>
+</div><script>
+const $=id=>document.getElementById(id),file=$('file'),gallery=$('gallery'),canvas=$('canvas'),beforeCanvas=$('beforeCanvas'),afterCanvas=$('afterCanvas'),editCanvas=$('editCanvas'),editSource=document.createElement('canvas');let img=null,garment='black',garmentHex='#000000',srcW=0,srcH=0,timer,compareBgMode=0,cmpFit=1,cmpZoom=1,cmpX=0,cmpY=0,dragging=false,lastX=0,lastY=0,brushMode='protect',brushStrokes=[],redoStrokes=[],painting=false,currentStroke=null,editFit=1,editZoom=1,editX=0,editY=0,editDragging=false,editLastX=0,editLastY=0;
+const vals=()=>({thr:+$('thr').value,soft:+$('soft').value,dot:+$('dot').value,half:+$('half').value/100});
+const proVals=()=>({lpi:+$('lpi').value,angle:+$('angle').value*Math.PI/180,shape:$('dotShape').value,black:+$('blackLevel').value,white:+$('whiteLevel').value,gamma:+$('gamma').value/100,halo:+$('halo').value});
+function hexRgb(h){h=h.replace('#','');return [parseInt(h.slice(0,2),16),parseInt(h.slice(2,4),16),parseInt(h.slice(4,6),16)]}
+function setGarmentHex(h){garmentHex=h; const [r,g,b]=hexRgb(h); const lum=.2126*r+.7152*g+.0722*b; garment=lum<128?'black':'white'; $('black').classList.toggle('active',h==='#000000');$('white').classList.toggle('active',h==='#ffffff'); $('preview').style.background=h; render()}
+function analyzeAuto(){if(!img){alert('Primero carga una imagen.');return}const ac=document.createElement('canvas'),max=420,sc=Math.min(1,max/Math.max(srcW,srcH));ac.width=Math.max(1,Math.round(srcW*sc));ac.height=Math.max(1,Math.round(srcH*sc));const cx=ac.getContext('2d',{willReadFrequently:true});cx.drawImage(img,0,0,ac.width,ac.height);const d=cx.getImageData(0,0,ac.width,ac.height).data,[gr,gg,gb]=hexRgb(garmentHex);let ds=[];for(let i=0;i<d.length;i+=16){if(d[i+3]<20)continue;const dr=d[i]-gr,dg=d[i+1]-gg,db=d[i+2]-gb;ds.push(Math.sqrt((dr*dr+dg*dg+db*db)/3))}ds.sort((a,b)=>a-b);const q=p=>ds[Math.min(ds.length-1,Math.floor(ds.length*p))]||32;let t=Math.round(Math.max(20,Math.min(58,q(.22))));let soft=Math.round(Math.max(48,Math.min(92,q(.58)-t+42)));let dot=Math.max(minDotForDpi(+$('dpi').value),Math.min(maxDotForDpi(+$('dpi').value),Math.round(Math.max(srcW,srcH)/560)));let half=80;const [r,g,b]=hexRgb(garmentHex),lum=.2126*r+.7152*g+.0722*b;if(lum>210){t=Math.max(24,t-4);soft=Math.max(52,soft);half=78}else if(lum>70){t=Math.max(25,t-2);soft=Math.max(58,soft);half=80}$('thr').value=t;$('soft').value=soft;$('dot').value=dot;$('half').value=half;labels();render()}$('autoGarment').onclick=analyzeAuto;
+$('garmentColor').onchange=e=>{const custom=e.target.value==='custom';$('customWrap').style.display=custom?'block':'none';let h=custom?$('customColor').value:e.target.value;setGarmentHex(h)};document.querySelectorAll('.colorQuick').forEach(b=>b.onclick=()=>{$('garmentColor').value=b.dataset.color;$('customWrap').style.display='none';setGarmentHex(b.dataset.color)});
+$('customColor').oninput=e=>{if($('garmentColor').value==='custom')setGarmentHex(e.target.value)};
+function minDotForDpi(dpi){return dpi>=250?6:3}
+function maxDotForDpi(dpi){return dpi>=250?10:5}
+function dotMm(dot,dpi){return dot/dpi*25.4}
+function applyDpiGuard(force=false){const dpi=+$('dpi').value,min=minDotForDpi(dpi),el=$('dot');el.min=1;if(force && +el.value<min)el.value=min;return min}
+function labels(){const dpi=+$('dpi').value,min=applyDpiGuard(false),dot=+$('dot').value,mm=dotMm(dot,dpi);$('thrV').textContent=$('thr').value;$('softV').textContent=$('soft').value;$('dotV').textContent=dot+' px · '+mm.toFixed(2)+' mm';$('halfV').textContent=$('half').value+'%';const g=$('printGuard');if(g){if(dot<min)g.textContent='⚠️ Trama '+dot+' px = '+mm.toFixed(2)+' mm: más fina que la guía automática ('+min+' px a '+dpi+' DPI).';else if(dot<=maxDotForDpi(dpi))g.textContent='🛡️ Seguro DTF: '+dot+' px = '+mm.toFixed(2)+' mm a '+dpi+' DPI · rango automático recomendado '+min+'–'+maxDotForDpi(dpi)+' px.';else g.textContent='⚠️ Trama '+dot+' px = '+mm.toFixed(2)+' mm · más gruesa que el rango automático; puede perder detalle.'}}
+function schedule(){labels();clearTimeout(timer);timer=setTimeout(render,70)}['thr','soft','dot','half'].forEach(x=>$(x).addEventListener('input',schedule));
+function garmentSet(g){const h=g==='black'?'#000000':'#ffffff';$('garmentColor').value=h;setGarmentHex(h)}$('black').onclick=()=>garmentSet('black');$('white').onclick=()=>garmentSet('white');
+function previewMode(mode){const p=$('preview');p.className='preview '+(mode==='check'?'checker':mode);['pvBlack','pvWhite','pvCheck'].forEach(id=>$(id).classList.remove('active'));$(mode==='black'?'pvBlack':mode==='white'?'pvWhite':'pvCheck').classList.add('active')}$('pvBlack').onclick=()=>previewMode('black');$('pvWhite').onclick=()=>previewMode('white');$('pvCheck').onclick=()=>previewMode('check');
+function loadChosen(f){if(!f)return;if(!f.type.startsWith('image/')&&!/\.(png|jpe?g|webp)$/i.test(f.name)){alert('Selecciona un PNG, JPG o WEBP.');return}const u=URL.createObjectURL(f),im=new Image();im.onload=()=>{img=im;srcW=im.naturalWidth;srcH=im.naturalHeight;brushStrokes=[];ignoredIssues=[];selectedIssue=null;$('editStage').dataset.ready='';$('compareStage').dataset.ready='';editFit=1;editZoom=1;editX=editY=0;cmpFit=1;cmpZoom=1;cmpX=cmpY=0;$('info').textContent=`${f.name} • ${srcW} × ${srcH}px • ${(f.size/1048576).toFixed(1)} MB`;render();URL.revokeObjectURL(u)};im.onerror=()=>{URL.revokeObjectURL(u);alert('No pude abrir ese archivo como imagen.');};im.src=u}
+$('openFile').onclick=()=>file.click();$('openGallery').onclick=()=>gallery.click();file.onchange=e=>loadChosen(e.target.files[0]);gallery.onchange=e=>loadChosen(e.target.files[0]);
+function processTo(target,preview=true){
+ if(!img)return;
+ let w=srcW,h=srcH;
+ if(preview){const max=1200,s=Math.min(1,max/Math.max(w,h));w=Math.max(1,Math.round(w*s));h=Math.max(1,Math.round(h*s))}
+ target.width=w;target.height=h;
+ const c=target.getContext('2d',{willReadFrequently:true});c.clearRect(0,0,w,h);c.drawImage(img,0,0,w,h);
+ const id=c.getImageData(0,0,w,h),d=id.data,{thr,soft,half}=vals(),pv=proVals();
+ const dpiNow=+$('dpi').value||300, scalePx=preview?(w/srcW):1, dot=Math.max(2,(dpiNow/pv.lpi)*scalePx);
+ for(let i=0;i<d.length;i+=4){for(let k=0;k<3;k++){let v=(d[i+k]-pv.black)/Math.max(1,pv.white-pv.black);v=Math.max(0,Math.min(1,v));v=Math.pow(v,1/pv.gamma);d[i+k]=Math.round(v*255)}}
+ const low=thr, high=Math.min(255,thr+soft); const [gr,gg,gb]=hexRgb(garmentHex);
+ // V11: detecta fondo cercano al color de la prenda conectado físicamente a los bordes.
+ let edgeBg=null;
+ {
+   const n=w*h, seen=new Uint8Array(n), q=new Int32Array(n); let head=0,tail=0;
+   const near=p=>{const i=p*4;if(d[i+3]===0)return true;const dr=d[i]-gr,dg=d[i+1]-gg,db=d[i+2]-gb;const dist=Math.sqrt((dr*dr+dg*dg+db*db)/3);return dist<=Math.max(46,thr+18)};
+   const push=p=>{if(!seen[p]&&near(p)){seen[p]=1;q[tail++]=p}};
+   for(let x=0;x<w;x++){push(x);push((h-1)*w+x)} for(let y=1;y<h-1;y++){push(y*w);push(y*w+w-1)}
+   while(head<tail){const p=q[head++],x=p%w,y=(p/w)|0;if(x)push(p-1);if(x<w-1)push(p+1);if(y)push(p-w);if(y<h-1)push(p+w)} edgeBg=seen;
+ }
+ // V36.3: mapa adaptativo de fondo oscuro/azulado conectado al exterior.
+ // Aprende desde los bordes y avanza solo por píxeles vecinos de tono parecido; así puede
+ // retirar franjas azul oscuro del fondo sin confundirlas con azules aislados de las armaduras.
+ let adaptiveBg=new Uint8Array(w*h);
+ if(garmentHex==='#000000'){
+   const q2=new Int32Array(w*h);let h2=0,t2=0;
+   const eligible=(p,from=-1)=>{const i=p*4;if(d[i+3]===0)return true;const r=d[i],g=d[i+1],b=d[i+2],mx=Math.max(r,g,b),mn=Math.min(r,g,b),sat=mx-mn,lum=.2126*r+.7152*g+.0722*b;
+     if(lum>150||mx>205)return false;
+     if(from>=0){const j=from*4,dr=r-d[j],dg=g-d[j+1],db=b-d[j+2],step=Math.sqrt((dr*dr+dg*dg+db*db)/3);if(step>34)return false;}
+     const blueish=b>=r*1.05&&b>=g*.92;const neutral=sat<=42;return lum<82||blueish||neutral;};
+   const push2=(p,from=-1)=>{if(!adaptiveBg[p]&&eligible(p,from)){adaptiveBg[p]=1;q2[t2++]=p}};
+   for(let x=0;x<w;x++){push2(x);push2((h-1)*w+x)}for(let y=1;y<h-1;y++){push2(y*w);push2(y*w+w-1)}
+   while(h2<t2){const p=q2[h2++],x=p%w,y=(p/w)|0;if(x)push2(p-1,p);if(x<w-1)push2(p+1,p);if(y)push2(p-w,p);if(y<h-1)push2(p+w,p)}
+ }
+ for(let y=0;y<h;y++)for(let x=0;x<w;x++){
+   const i=(y*w+x)*4,r=d[i],g=d[i+1],b=d[i+2],a=d[i+3]; if(a===0)continue;
+   const dr=r-gr,dg=g-gg,db=b-gb; let dist=Math.sqrt((dr*dr+dg*dg+db*db)/3);
+   const lum=.2126*r+.7152*g+.0722*b, mx=Math.max(r,g,b),mn=Math.min(r,g,b),sat=mx-mn;
+   const warm=(r>g*1.05 && g>b*1.08 && r>105), highlight=lum>170 || (mx>195&&sat>45);
+   // V36.1: knockout negro consciente de conectividad.
+   // Solo perfora negro/neutro cuando pertenece al fondo conectado al borde.
+   // Los negros internos de armaduras, cabello, líneas y sombras se conservan como tinta del diseño.
+   if(garmentHex==='#000000'){
+     const bg=edgeBg[y*w+x]===1;
+     const blackNeutral=mx<=Math.max(30,thr+4)&&sat<=28;
+     const nearBlackNeutral=mx<=Math.max(58,thr+22)&&sat<=22;
+     if(bg&&(blackNeutral||nearBlackNeutral)){d[i+3]=0;continue}
+     // V36.4: microtrama de fondo fina y progresiva.
+     // Usa una matriz ordenada de 4x4 para repartir huecos pequeños y uniformes,
+     // evitando parches grandes mientras protege azules saturados del arte.
+     if(adaptiveBg[y*w+x]){
+       const blueish=b>=r*1.05&&b>=g*.92, darkness=Math.max(0,Math.min(1,(150-lum)/105));
+       let bgStrength=Math.max(darkness,blueish?Math.max(.20,(136-lum)/122):0);
+       const vividBlue=(b-r>42&&b-g>24&&sat>72&&lum>68);
+       if(vividBlue)bgStrength*=.20;
+       if(bgStrength>.14){
+         const bayer4=[0,8,2,10,12,4,14,6,3,11,1,9,15,7,13,5];
+         const bx=x&3,by=y&3,ordered=(bayer4[by*4+bx]+.5)/16;
+         const hash=((x*73856093)^(y*19349663))>>>0;
+         const jitter=((hash&255)/255-.5)*.08;
+         const hole=Math.max(0,Math.min(.88,(bgStrength-.10)*.92));
+         if(ordered+jitter<hole){d[i+3]=0;continue}
+         const keep=Math.max(.58,1-bgStrength*.24);
+         d[i+3]=Math.round(a*keep);continue
+       }
+     }
+     if(!bg&&mx<=Math.max(72,high)&&sat<=34){d[i+3]=a;continue}
+   }else if(edgeBg[y*w+x]){d[i+3]=0;continue}
+   // En negro protegemos piel/dorados/luces; en otros colores protegemos detalle saturado lejano al color base.
+   if((garmentHex==='#000000'&&(warm||highlight||(sat>75&&lum>78))) || (garmentHex!=='#000000'&&sat>85&&dist>70)) dist=Math.min(255,dist+55);
+   if(dist<=low){d[i+3]=0;continue} if(dist>=high){d[i+3]=a;continue}
+   let keep=(dist-low)/Math.max(1,high-low); keep=keep*keep*(3-2*keep);
+   const ca=Math.cos(pv.angle),sa=Math.sin(pv.angle),rx=x*ca+y*sa,ry=-x*sa+y*ca,gx=((rx%dot)+dot)%dot-dot/2,gy=((ry%dot)+dot)%dot-dot/2,nx=Math.abs(gx)/(dot/2),ny=Math.abs(gy)/(dot/2),q=Math.sqrt(keep);
+   let printed=false;if(pv.shape==='square')printed=Math.max(nx,ny)<=q;else if(pv.shape==='diamond')printed=(nx+ny)<=q*1.35;else if(pv.shape==='ellipse')printed=(nx*nx+(ny*1.65)*(ny*1.65))<=q*q;else if(pv.shape==='line')printed=ny<=keep;else printed=(nx*nx+ny*ny)<=q*q;const binary=printed?a:0;
+   d[i+3]=half>=.999?binary:Math.round(binary*half+a*keep*(1-half));
+ }
+ // V15: aplica retoques manuales después del automático. Las coordenadas se guardan normalizadas para servir también al PNG final.
+ if(brushStrokes.length){
+   for(const st of brushStrokes){
+     const rad=Math.max(1,st.r*Math.min(w,h));
+     for(const pt of st.pts){
+       const cx=pt.x*w,cy=pt.y*h,x0=Math.max(0,Math.floor(cx-rad)),x1=Math.min(w-1,Math.ceil(cx+rad)),y0=Math.max(0,Math.floor(cy-rad)),y1=Math.min(h-1,Math.ceil(cy+rad));
+       for(let yy=y0;yy<=y1;yy++)for(let xx=x0;xx<=x1;xx++){const dx=xx-cx,dy=yy-cy;if(dx*dx+dy*dy>rad*rad)continue;const ii=(yy*w+xx)*4;if(st.mode==='erase')d[ii+3]=0;else{const sx=Math.min(srcW-1,Math.max(0,Math.round(xx/w*srcW))),sy=Math.min(srcH-1,Math.max(0,Math.round(yy/h*srcH)));/* alpha original normalmente 255; conserva transparencias originales */d[ii+3]=255;}}
+     }
+   }
+ }
+ // V26: limpieza segura. Solo elimina componentes de UN píxel sin vecinos visibles.
+ // Se ejecuta después del automático y antes de exportar; no toca puntos de semitono conectados ni detalles agrupados.
+ if(safeCleanup){
+   const alpha=new Uint8Array(w*h);for(let p=0,i=3;p<alpha.length;p++,i+=4)alpha[p]=d[i]>=8?1:0;
+   const kill=[];
+   for(let y=1;y<h-1;y++)for(let x=1;x<w-1;x++){const p=y*w+x;if(!alpha[p])continue;let n=0;
+     for(let yy=-1;yy<=1;yy++)for(let xx=-1;xx<=1;xx++)if((xx||yy)&&alpha[p+yy*w+xx])n++;
+     if(n===0)kill.push(p);
+   }
+   for(const p of kill)d[p*4+3]=0;
+   lastCleanCount=kill.length;
+ }
+ if(pv.halo>0){for(let i=3;i<d.length;i+=4)if(d[i]>0&&d[i]<pv.halo)d[i]=0}
+ c.putImageData(id,0,0)
+}
+function compareFitScale(){const w=$('compareWrap').clientWidth||600,h=$('compareWrap').clientHeight||520;if(!afterCanvas.width||!afterCanvas.height)return 1;return Math.min(w/afterCanvas.width,h/afterCanvas.height)}
+function clampPan(){const wrap=$('compareWrap'),sw=afterCanvas.width*cmpFit*cmpZoom,sh=afterCanvas.height*cmpFit*cmpZoom,W=wrap.clientWidth,H=wrap.clientHeight;const minX=Math.min(0,W-sw),minY=Math.min(0,H-sh);cmpX=Math.min(0,Math.max(minX,cmpX));cmpY=Math.min(0,Math.max(minY,cmpY));if(sw<W)cmpX=(W-sw)/2;if(sh<H)cmpY=(H-sh)/2}
+function applyCompareTransform(){clampPan();$('compareStage').style.transform=`translate(${cmpX}px,${cmpY}px) scale(${cmpFit*cmpZoom})`;$('zoomLabel').textContent=Math.round(cmpZoom*100)+'%'}
+function fitCompare(){cmpFit=compareFitScale();cmpZoom=1;$('zoom').value=100;const W=$('compareWrap').clientWidth,H=$('compareWrap').clientHeight,sw=afterCanvas.width*cmpFit,sh=afterCanvas.height*cmpFit;cmpX=(W-sw)/2;cmpY=(H-sh)/2;applyCompareTransform()}
+function centerCompare(){const W=$('compareWrap').clientWidth,H=$('compareWrap').clientHeight,sw=afterCanvas.width*cmpFit*cmpZoom,sh=afterCanvas.height*cmpFit*cmpZoom;cmpX=(W-sw)/2;cmpY=(H-sh)/2;applyCompareTransform()}
+function syncEditViewport(){const W=$('editWrap').clientWidth||600,H=$('editWrap').clientHeight||520;if(editCanvas.width!==W||editCanvas.height!==H){editCanvas.width=W;editCanvas.height=H;$('editStage').style.width=W+'px';$('editStage').style.height=H+'px';}}
+function editFitScale(){const W=$('editWrap').clientWidth||600,H=$('editWrap').clientHeight||520;if(!editSource.width||!editSource.height)return 1;return Math.min(W/editSource.width,H/editSource.height)}
+function clampEditPan(){const W=editCanvas.width,H=editCanvas.height,sw=editSource.width*editFit*editZoom,sh=editSource.height*editFit*editZoom,minX=Math.min(0,W-sw),minY=Math.min(0,H-sh);editX=Math.min(0,Math.max(minX,editX));editY=Math.min(0,Math.max(minY,editY));if(sw<W)editX=(W-sw)/2;if(sh<H)editY=(H-sh)/2}
+function drawEditCamera(lock=false){if(!img)return;syncEditViewport();if(!lock)clampEditPan();const c=editCanvas.getContext('2d');c.clearRect(0,0,editCanvas.width,editCanvas.height);const sc=editFit*editZoom;c.imageSmoothingEnabled=true;c.imageSmoothingQuality='high';c.drawImage(editSource,editX,editY,editSource.width*sc,editSource.height*sc);$('editZoomLabel').textContent=Math.round(editZoom*100)+'%';updateCameraReadout()}
+function applyEditTransform(){drawEditCamera()}
+function fitEdit(){syncEditViewport();editFit=editFitScale();editZoom=1;$('editZoom').value=100;const sw=editSource.width*editFit,sh=editSource.height*editFit;editX=(editCanvas.width-sw)/2;editY=(editCanvas.height-sh)/2;drawEditCamera()}
+function centerEdit(){syncEditViewport();const sw=editSource.width*editFit*editZoom,sh=editSource.height*editFit*editZoom;editX=(editCanvas.width-sw)/2;editY=(editCanvas.height-sh)/2;drawEditCamera()}
+function renderEdit(lockCamera=false){if(!img)return;const first=!$('editStage').dataset.ready;const cam={fit:editFit,zoom:editZoom,x:editX,y:editY};processTo(editSource,true);syncEditViewport();$('editStatus').textContent=brushStrokes.length?brushStrokes.length+' trazo(s) manual(es) aplicados.':'Sin retoques manuales.';if(first){$('editStage').dataset.ready='1';requestAnimationFrame(fitEdit)}else{if(lockCamera){editFit=cam.fit;editZoom=cam.zoom;editX=cam.x;editY=cam.y;}drawEditCamera(lockCamera)}}
+function renderCompare(){
+ if(!img)return;
+ const stage=$('compareStage'),first=!stage.dataset.ready;
+
+ // V36.27: ANTES se captura primero, directamente de la imagen original.
+ beforeCanvas.width=srcW;
+ beforeCanvas.height=srcH;
+ const bg=beforeCanvas.getContext('2d');
+ bg.setTransform(1,0,0,1,0,0);
+ bg.globalCompositeOperation='source-over';
+ bg.globalAlpha=1;
+ bg.clearRect(0,0,srcW,srcH);
+ bg.drawImage(img,0,0,srcW,srcH);
+
+ // DESPUÉS se procesa aparte. Nunca reutiliza ni modifica el canvas ANTES.
+ processTo(afterCanvas,true);
+
+ // Ambos lienzos conservan exactamente el mismo tamaño para el deslizador.
+ if(afterCanvas.width!==beforeCanvas.width||afterCanvas.height!==beforeCanvas.height){
+   const tmp=document.createElement('canvas');
+   tmp.width=beforeCanvas.width;tmp.height=beforeCanvas.height;
+   tmp.getContext('2d').drawImage(afterCanvas,0,0,tmp.width,tmp.height);
+   afterCanvas.width=tmp.width;afterCanvas.height=tmp.height;
+   afterCanvas.getContext('2d').drawImage(tmp,0,0);
+ }
+
+ stage.style.width=beforeCanvas.width+'px';
+ stage.style.height=beforeCanvas.height+'px';
+ updateCompareSplit();
+ if(first){stage.dataset.ready='1';requestAnimationFrame(fitCompare)}
+ else requestAnimationFrame(applyCompareTransform);
+}
+function updateCompareSplit(){const v=+$('compareRange').value;$('beforeCanvas').style.clipPath=`inset(0 ${100-v}% 0 0)`;$('compareLine').style.left=v+'%'}
+$('compareRange').oninput=updateCompareSplit;
+$('zoom').oninput=()=>{const old=cmpZoom,newZ=+$('zoom').value/100,W=$('compareWrap').clientWidth,H=$('compareWrap').clientHeight,cx=W/2,cy=H/2,scale=newZ/old;cmpX=cx-(cx-cmpX)*scale;cmpY=cy-(cy-cmpY)*scale;cmpZoom=newZ;applyCompareTransform()};
+$('fitBtn').onclick=fitCompare;
+$('oneBtn').onclick=()=>{cmpFit=1;cmpZoom=1;$('zoom').value=100;centerCompare()};
+$('centerBtn').onclick=centerCompare;
+$('compareBg').onclick=()=>{compareBgMode=(compareBgMode+1)%3;const w=$('compareWrap');w.className='compareWrap '+(compareBgMode===0?'checker':compareBgMode===1?'black':'white')};
+const vp=$('compareViewport');
+vp.addEventListener('pointerdown',e=>{if(!img)return;dragging=true;lastX=e.clientX;lastY=e.clientY;vp.setPointerCapture(e.pointerId)});
+vp.addEventListener('pointermove',e=>{if(!dragging)return;cmpX+=e.clientX-lastX;cmpY+=e.clientY-lastY;lastX=e.clientX;lastY=e.clientY;applyCompareTransform()});
+vp.addEventListener('pointerup',e=>{dragging=false;try{vp.releasePointerCapture(e.pointerId)}catch(_){}});vp.addEventListener('pointercancel',()=>dragging=false);
+$('brushSize').oninput=()=>{$('brushV').textContent=$('brushSize').value+' px'};
+function setBrush(m){
+  // V21: la herramienta solo cambia el modo. La cámara vive dentro del canvas fijo y no puede reiniciarse aquí.
+  brushMode=m;
+  $('protectBrush').classList.toggle('active',m==='protect');
+  $('eraseBrush').classList.toggle('active',m==='erase');
+  
+  $('protectBrush').classList.toggle('secondary',m!=='protect');
+  $('eraseBrush').classList.toggle('secondary',m!=='erase');
+  
+  cursor.style.display='none';
+  updateCameraReadout();
+}
+function updateCameraReadout(){
+  const el=$('cameraReadout'); if(!el)return;
+  el.textContent=`Vista fija: ${Math.round(editZoom*100)}% · X ${Math.round(editX)} · Y ${Math.round(editY)} · ${brushMode==='protect'?'Proteger':'Transparencia'}`;
+}
+$('protectBrush').onclick=()=>setBrush('protect');
+$('eraseBrush').onclick=()=>setBrush('erase');
+
+$('editZoom').oninput=()=>{const old=editZoom,newZ=+$('editZoom').value/100,W=editCanvas.width,H=editCanvas.height,cx=W/2,cy=H/2,scale=newZ/old;editX=cx-(cx-editX)*scale;editY=cy-(cy-editY)*scale;editZoom=newZ;applyEditTransform()};
+$('editFit').onclick=fitEdit;$('editOne').onclick=()=>{editFit=1;editZoom=1;$('editZoom').value=100;centerEdit()};$('editCenter').onclick=centerEdit;
+const evp=$('editViewport'),cursor=$('brushCursor');
+function editImagePoint(e){const r=evp.getBoundingClientRect(),scale=editFit*editZoom;return{x:Math.max(0,Math.min(1,(e.clientX-r.left-editX)/(editSource.width*scale))),y:Math.max(0,Math.min(1,(e.clientY-r.top-editY)/(editSource.height*scale)))}}
+function updateBrushCursor(e){const r=evp.getBoundingClientRect(),size=+$('brushSize').value*editFit*editZoom;cursor.style.display='block';cursor.style.width=size*2+'px';cursor.style.height=size*2+'px';cursor.style.left=(e.clientX-r.left-size)+'px';cursor.style.top=(e.clientY-r.top-size)+'px'}
+const activeTouches=new Map();let pinchStartDist=0,pinchStartZoom=1,pinchStartX=0,pinchStartY=0,pinchCenterX=0,pinchCenterY=0;
+function touchDistance(){const a=[...activeTouches.values()];if(a.length<2)return 0;return Math.hypot(a[0].x-a[1].x,a[0].y-a[1].y)}
+function touchCenter(){const a=[...activeTouches.values()];return a.length<2?null:{x:(a[0].x+a[1].x)/2,y:(a[0].y+a[1].y)/2}}
+evp.addEventListener('pointerdown',e=>{
+ if(!img)return; evp.setPointerCapture(e.pointerId); activeTouches.set(e.pointerId,{x:e.clientX,y:e.clientY});
+ if(activeTouches.size===2){painting=false;currentStroke=null;const c=touchCenter(),r=evp.getBoundingClientRect();pinchStartDist=touchDistance();pinchStartZoom=editZoom;pinchStartX=editX;pinchStartY=editY;pinchCenterX=c.x-r.left;pinchCenterY=c.y-r.top;cursor.style.display='none';return}
+ if(e.pointerType==='touch' && activeTouches.size>1)return;
+ painting=true;redoStrokes=[];const radius=(+$('brushSize').value)/Math.min(editSource.width,editSource.height);currentStroke={mode:brushMode,r:radius,pts:[editImagePoint(e)]};brushStrokes.push(currentStroke);updateBrushCursor(e);renderEdit(true);renderCompare();processTo(canvas,true)
+});
+evp.addEventListener('pointermove',e=>{
+ if(activeTouches.has(e.pointerId))activeTouches.set(e.pointerId,{x:e.clientX,y:e.clientY});
+ if(activeTouches.size>=2){const d=touchDistance(),c=touchCenter(),r=evp.getBoundingClientRect();if(pinchStartDist>0&&c){const nz=Math.max(1,Math.min(4,pinchStartZoom*d/pinchStartDist));const ratio=nz/pinchStartZoom;editZoom=nz;$('editZoom').value=Math.round(nz*100/25)*25;editX=(c.x-r.left)-((pinchCenterX-pinchStartX)*ratio);editY=(c.y-r.top)-((pinchCenterY-pinchStartY)*ratio);drawEditCamera()}return}
+ updateBrushCursor(e);if(!painting||!currentStroke)return;const p=editImagePoint(e),last=currentStroke.pts[currentStroke.pts.length-1];if(Math.hypot(p.x-last.x,p.y-last.y)>.002){currentStroke.pts.push(p);renderEdit(true);renderCompare();processTo(canvas,true)}
+});
+function endEditPointer(e){activeTouches.delete(e.pointerId);painting=false;currentStroke=null;pinchStartDist=0;drawEditCamera(true);try{evp.releasePointerCapture(e.pointerId)}catch(_){} }
+evp.addEventListener('pointerup',endEditPointer);evp.addEventListener('pointercancel',endEditPointer);evp.addEventListener('pointerleave',e=>{if(!painting&&activeTouches.size===0)cursor.style.display='none'});
+$('undoBrush').onclick=()=>{const st=brushStrokes.pop();if(st)redoStrokes.push(st);render()};$('redoBrush').onclick=()=>{const st=redoStrokes.pop();if(st)brushStrokes.push(st);render()};$('clearBrush').onclick=()=>{redoStrokes=brushStrokes.slice();brushStrokes=[];render()};
+window.addEventListener('resize',()=>{if(img){applyCompareTransform();drawEditCamera(true)}});
+function render(){if(!img)return;processTo(canvas,true);renderEdit();renderCompare();const cm=+$('cm').value,cmH=+$('cmH').value,dpi=+$('dpi').value,px=Math.round(cm/2.54*dpi),hp=cmH>0?Math.round(cmH/2.54*dpi):Math.round(px*srcH/srcW);$('outInfo').textContent=cmH>0?`Salida: ${px} × ${hp}px • ${cm} × ${cmH} cm • ${dpi} DPI · diseño centrado sin deformar`:`Salida: ${px} × ${hp}px • ${cm} cm de ancho • alto proporcional • ${dpi} DPI`}$('cm').oninput=render;$('cmH').oninput=render;$('dpi').onchange=()=>{
+function saveBlobAndroid(blob,name){return new Promise((resolve,reject)=>{if(window.RDNAndroid&&typeof window.RDNAndroid.saveBase64Png==='function'){const fr=new FileReader();fr.onload=()=>{window.RDNAndroid.saveBase64Png(String(fr.result).split(',')[1],name);resolve()};fr.onerror=reject;fr.readAsDataURL(blob)}else{const u=URL.createObjectURL(blob),a=document.createElement('a');a.href=u;a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(u),60000);resolve()}})}
+function proLabels(){ $('lpiV').textContent=$('lpi').value;$('angleV').textContent=$('angle').value+'°';$('blackLevelV').textContent=$('blackLevel').value;$('whiteLevelV').textContent=$('whiteLevel').value;$('gammaV').textContent=(+$('gamma').value/100).toFixed(2);$('haloV').textContent=$('halo').value;$('mockScaleV').textContent=$('mockScale').value+'%'}
+['lpi','angle','dotShape','blackLevel','whiteLevel','gamma','halo'].forEach(id=>$(id).addEventListener('input',()=>{proLabels();schedule()}));
+async function canvasPngBlob(c,dpi=300){const id=c.getContext('2d',{willReadFrequently:true}).getImageData(0,0,c.width,c.height);return new Blob([await encodePNG_RGBA(c.width,c.height,id.data,dpi)],{type:'image/png'})}
+$('exportUnderbase').onclick=async()=>{try{if(!img)throw Error('Primero carga una imagen.');$('underStatus').textContent='⏳ Construyendo base blanca…';const src=document.createElement('canvas');processTo(src,false);const w=src.width,h=src.height,a=src.getContext('2d',{willReadFrequently:true}).getImageData(0,0,w,h).data,mask=new Uint8Array(w*h);for(let p=0;p<mask.length;p++)mask[p]=a[p*4+3]>5?1:0;let steps=Math.abs(Math.round(+$('underbase').value)),spread=+$('underbase').value>0,cur=mask;for(let s=0;s<steps;s++){let nx=new Uint8Array(cur);for(let y=1;y<h-1;y++)for(let x=1;x<w-1;x++){let p=y*w+x;if(spread&&!cur[p]&&(cur[p-1]||cur[p+1]||cur[p-w]||cur[p+w]))nx[p]=1;if(!spread&&cur[p]&&(!cur[p-1]||!cur[p+1]||!cur[p-w]||!cur[p+w]))nx[p]=0}cur=nx}const out=document.createElement('canvas');out.width=w;out.height=h;const od=out.getContext('2d').createImageData(w,h),op=Math.round(Math.max(1,Math.min(100,+$('underOpacity').value))*2.55);for(let p=0;p<cur.length;p++){let i=p*4;od.data[i]=od.data[i+1]=od.data[i+2]=255;od.data[i+3]=cur[p]?op:0}out.getContext('2d').putImageData(od,0,0);const blob=await canvasPngBlob(out,+$('dpi').value);await saveBlobAndroid(blob,'RDN_DTF_UNDERBASE_'+($('underbase').value)+'px_V36_3_PRO.png');$('underStatus').textContent='✅ Base blanca exportada.'}catch(e){$('underStatus').textContent='❌ '+e.message}};
+$('exportUpscale').onclick=async()=>{if(!img)return alert('Primero carga una imagen.');const f=+$('upscaleFactor').value,src=document.createElement('canvas');processTo(src,false),out=document.createElement('canvas');out.width=src.width*f;out.height=src.height*f;const g=out.getContext('2d');g.imageSmoothingEnabled=true;g.imageSmoothingQuality='high';g.drawImage(src,0,0,out.width,out.height);await saveBlobAndroid(await canvasPngBlob(out,+$('dpi').value),'RDN_DTF_UPSCALE_'+f+'X_V36_3_PRO.png')};
+function renderMock(){
+ const c=$('mockCanvas');c.width=900;c.height=1050;const g=c.getContext('2d');
+ const col=$('mockColor').value;g.fillStyle='#d8d9dc';g.fillRect(0,0,c.width,c.height);
+ g.save();g.shadowColor='rgba(0,0,0,.28)';g.shadowBlur=24;g.shadowOffsetY=16;
+ // V36.20: hombro más natural, manga con caída y torso menos tubular.
+ const shirt=new Path2D();shirt.moveTo(332,158);shirt.bezierCurveTo(286,164,238,181,198,207);
+ shirt.bezierCurveTo(162,231,118,267,82,300);shirt.bezierCurveTo(67,314,68,330,82,342);
+ shirt.lineTo(174,414);shirt.bezierCurveTo(190,427,207,422,219,408);shirt.lineTo(252,370);
+ shirt.bezierCurveTo(247,520,246,745,258,916);shirt.bezierCurveTo(345,934,555,934,642,916);
+ shirt.bezierCurveTo(654,745,653,520,648,370);shirt.lineTo(681,408);shirt.bezierCurveTo(693,422,710,427,726,414);
+ shirt.lineTo(818,342);shirt.bezierCurveTo(832,330,833,314,818,300);shirt.bezierCurveTo(782,267,738,231,702,207);
+ shirt.bezierCurveTo(662,181,614,164,568,158);shirt.bezierCurveTo(540,184,505,198,450,198);
+ shirt.bezierCurveTo(395,198,360,184,332,158);shirt.closePath();
+ g.fillStyle=col;g.fill(shirt);g.restore();
+ const shade=g.createLinearGradient(230,0,670,0);shade.addColorStop(0,'rgba(0,0,0,.20)');shade.addColorStop(.28,'rgba(255,255,255,.055)');shade.addColorStop(.5,'rgba(255,255,255,.10)');shade.addColorStop(.72,'rgba(255,255,255,.05)');shade.addColorStop(1,'rgba(0,0,0,.20)');g.fillStyle=shade;g.fill(shirt);
+ // Cuello más pequeño: ribete y abertura integrados en la tela.
+ g.fillStyle=(col==='#000000'||col==='black')?'#090909':'rgba(0,0,0,.16)';g.beginPath();g.ellipse(450,171,66,31,0,0,Math.PI*2);g.fill();
+ g.strokeStyle='rgba(0,0,0,.42)';g.lineWidth=9;g.beginPath();g.bezierCurveTo(370,166,392,201,450,204);g.bezierCurveTo(508,201,530,166,563,159);g.stroke();
+ g.strokeStyle='rgba(255,255,255,.08)';g.lineWidth=2;g.beginPath();g.bezierCurveTo(374,169,397,196,450,199);g.bezierCurveTo(503,196,526,169,559,161);g.stroke();
+ // costuras de manga discretas
+ g.strokeStyle='rgba(255,255,255,.08)';g.lineWidth=2;g.beginPath();g.moveTo(220,217);g.lineTo(174,414);g.moveTo(680,217);g.lineTo(726,414);g.stroke();
+ // pliegues más suaves
+ g.strokeStyle='rgba(0,0,0,.10)';g.lineWidth=4;for(const x of [305,365,535,595]){g.beginPath();g.moveTo(x,340);g.bezierCurveTo(x+(x<450?12:-12),535,x+(x<450?5:-5),735,x+(x<450?14:-14),900);g.stroke()}
+ if(img){const processed=document.createElement('canvas');processTo(processed,true);const sc=+$('mockScale').value/100,maxW=390*sc/0.55,maxH=500*sc/0.55,s=Math.min(maxW/processed.width,maxH/processed.height),ww=processed.width*s,hh=processed.height*s;g.save();g.beginPath();g.rect(250,245,400,610);g.clip();const mx=(900-ww)/2,my=285;
+ // Solo visualización del mockup: leve refuerzo para que negros/grises del arte
+ // no desaparezcan sobre camiseta negra. No altera el PNG DTF.
+ if(col==='#000000'||col==='black'){
+   g.save();g.globalAlpha=.18;g.filter='brightness(1.32) contrast(1.08)';
+   g.drawImage(processed,mx,my,ww,hh);g.restore();
+ }
+ g.drawImage(processed,mx,my,ww,hh);g.restore()}
+}
+['mockColor','mockSide','mockScale'].forEach(id=>$(id).addEventListener('input',()=>{proLabels();renderMock()}));$('exportMock').onclick=async()=>{renderMock();await saveBlobAndroid(await canvasPngBlob($('mockCanvas'),150),'RDN_MOCKUP_V36_3_PRO.png')};
+const oldRender=render;render=function(){oldRender();renderMock()};proLabels();renderMock();
+
+applyDpiGuard(true);labels();render()};
+let inspectorData=null, safeCleanup=false, lastCleanCount=0, selectedIssue=null, ignoredIssues=[];
+function inspectorRow(level,title,msg){const icon=level==='ok'?'🟢':level==='warn'?'🟡':'🔴';return `<div style="padding:9px;border-radius:10px;background:#10131a"><b>${icon} ${title}</b><div class="tiny" style="margin-top:3px">${msg}</div></div>`}
+function runInspector(){
+ if(!img){alert('Primero carga una imagen.');return}
+ const src=document.createElement('canvas');processTo(src,false);
+ const max=700,sc=Math.min(1,max/Math.max(src.width,src.height)),w=Math.max(1,Math.round(src.width*sc)),h=Math.max(1,Math.round(src.height*sc));
+ const c=document.createElement('canvas');c.width=w;c.height=h;const x=c.getContext('2d',{willReadFrequently:true});x.drawImage(src,0,0,w,h);const im=x.getImageData(0,0,w,h),d=im.data;
+ let opaque=0,partial=0,clear=0,isolated=0,edge=0;const occ=new Uint8Array(w*h), iso=new Uint8Array(w*h), fine=new Uint8Array(w*h), part=new Uint8Array(w*h);
+ for(let i=0,j=0;i<d.length;i+=4,j++){const a=d[i+3];if(a<8)clear++;else{occ[j]=1;if(a<245){partial++;part[j]=1}else opaque++}}
+ for(let y=1;y<h-1;y++)for(let xx=1;xx<w-1;xx++){const k=y*w+xx;if(!occ[k])continue;let n=0;for(let yy=-1;yy<=1;yy++)for(let dx=-1;dx<=1;dx++)if(dx||yy)n+=occ[k+yy*w+dx];if(n<=1){isolated++;iso[k]=1}if(n<8){edge++;fine[k]=1}}
+ const total=w*h,ink=opaque+partial,inkPct=ink/total*100,partPct=ink?partial/ink*100:0,isoPct=ink?isolated/ink*100:0,edgePct=ink?edge/ink*100:0;
+ inspectorData={canvas:c,w,h,iso,fine,part,isoPct,edgePct,partPct,inkPct};
+ let rows=[];rows.push(inspectorRow(isoPct<0.12?'ok':isoPct<0.45?'warn':'risk','Píxeles aislados',isoPct<0.12?'No se detecta una cantidad preocupante de puntos sueltos.':`Se detectó aproximadamente ${isoPct.toFixed(2)}% de puntos muy aislados en la muestra. Usa “Puntos aislados” para localizarlos.`));
+ rows.push(inspectorRow(partPct<35?'ok':partPct<55?'warn':'risk','Transparencia parcial',`${partPct.toFixed(1)}% de la tinta visible usa alfa parcial. ${partPct>55?'Puede haber demasiadas transiciones suaves o halos.':'Nivel razonable para degradados y semitono.'}`));
+ rows.push(inspectorRow(edgePct<45?'ok':edgePct<65?'warn':'risk','Detalle fino',`${edgePct.toFixed(1)}% de los píxeles visibles están cerca de un borde en la muestra. ${edgePct>65?'Conviene revisar letras, líneas y puntos pequeños con zoom.':'La estructura general no parece excesivamente frágil.'}`));
+ rows.push(inspectorRow(inkPct<75?'ok':inkPct<90?'warn':'risk','Cobertura sólida',`El diseño ocupa aproximadamente ${inkPct.toFixed(1)}% del área analizada. ${inkPct>90?'Hay muy poca transparencia global.':'La cobertura global deja espacio transparente.'}`));
+ const risks=(isoPct>=.45)+(partPct>=55)+(edgePct>=65)+(inkPct>=90),warns=(isoPct>=.12&&isoPct<.45)+(partPct>=35&&partPct<55)+(edgePct>=45&&edgePct<65)+(inkPct>=75&&inkPct<90);
+ $('inspectSummary').innerHTML=risks?`🔴 <b>${risks} punto(s) de riesgo</b> · ${warns} por revisar`:warns?`🟡 <b>${warns} punto(s) por revisar</b> · sin riesgos fuertes detectados`:`🟢 <b>Sin alertas importantes detectadas</b>`;
+ $('inspectItems').innerHTML=rows.join('');$('issuePanel').style.display='block';showIssue('isolated');
+}
+function showIssue(type){
+ if(!inspectorData)return;const D=inspectorData,out=$('issueCanvas');out.width=D.w;out.height=D.h;const g=out.getContext('2d');g.clearRect(0,0,D.w,D.h);g.drawImage(D.canvas,0,0);if(type==='clear'){$('issueLegend').textContent='Marcas ocultas. Vista del PNG procesado.';return}
+ const mask=type==='isolated'?D.iso:type==='fine'?D.fine:D.part;const label=type==='isolated'?'Píxeles aislados':type==='fine'?'Detalle fino':'Transparencia parcial';
+ g.save();g.fillStyle=type==='isolated'?'rgba(255,70,55,.92)':type==='fine'?'rgba(255,205,45,.58)':'rgba(60,170,255,.48)';
+ const step=type==='isolated'?1:2;for(let y=0;y<D.h;y+=step)for(let x=0;x<D.w;x+=step){const k=y*D.w+x;if(mask[k]&&!(type==='isolated'&&isIgnored(x,y)))g.fillRect(x,y,Math.max(2,step),Math.max(2,step))}g.restore();
+ $('issueLegend').textContent=`Mapa: ${label}. Rojo = punto aislado; amarillo = borde/detalle fino; azul = alfa parcial.`;
+}
+$('inspectBtn').onclick=runInspector;
+$('issueIsolated').onclick=()=>showIssue('isolated');$('issueFine').onclick=()=>showIssue('fine');$('issuePartial').onclick=()=>showIssue('partial');$('issueClear').onclick=()=>showIssue('clear');
+function issueKey(x,y){return x+','+y}
+function isIgnored(x,y){return ignoredIssues.includes(issueKey(x,y))}
+function drawSurgery(){
+ if(!selectedIssue||!inspectorData)return;const D=inspectorData, out=$('surgeryCanvas'), size=180;out.width=size;out.height=size;const g=out.getContext('2d');g.clearRect(0,0,size,size);
+ const radius=24,sx=Math.max(0,selectedIssue.x-radius),sy=Math.max(0,selectedIssue.y-radius),sw=Math.min(D.w-sx,radius*2+1),sh=Math.min(D.h-sy,radius*2+1);
+ g.imageSmoothingEnabled=false;g.drawImage(D.canvas,sx,sy,sw,sh,0,0,size,size);const cx=(selectedIssue.x-sx+.5)/sw*size,cy=(selectedIssue.y-sy+.5)/sh*size;
+ g.strokeStyle='#ff3b30';g.lineWidth=3;g.beginPath();g.arc(cx,cy,12,0,Math.PI*2);g.stroke();g.beginPath();g.moveTo(cx-18,cy);g.lineTo(cx+18,cy);g.moveTo(cx,cy-18);g.lineTo(cx,cy+18);g.stroke();
+ $('surgeryInfo').textContent=`Marca seleccionada · ${Math.round(selectedIssue.x/D.w*100)}% horizontal · ${Math.round(selectedIssue.y/D.h*100)}% vertical. Decide sin afectar el resto.`;$('surgeryPanel').style.display='block';
+}
+$('issueCanvas').addEventListener('click',e=>{if(!inspectorData)return;const D=inspectorData,r=$('issueCanvas').getBoundingClientRect(),tx=(e.clientX-r.left)/r.width*D.w,ty=(e.clientY-r.top)/r.height*D.h;let best=null,bd=1e9;const rr=Math.max(10,Math.round(Math.max(D.w,D.h)*.035));for(let y=Math.max(0,Math.floor(ty-rr));y<=Math.min(D.h-1,Math.ceil(ty+rr));y++)for(let x=Math.max(0,Math.floor(tx-rr));x<=Math.min(D.w-1,Math.ceil(tx+rr));x++){const k=y*D.w+x;if(!D.iso[k]||isIgnored(x,y))continue;const dd=(x-tx)*(x-tx)+(y-ty)*(y-ty);if(dd<bd){bd=dd;best={x,y}}}if(!best){$('surgeryInfo').textContent='No encontré una marca roja cerca. Toca directamente uno de los puntos rojos.';$('surgeryPanel').style.display='block';return}selectedIssue=best;drawSurgery()});
+function applySurgery(mode){if(!selectedIssue||!inspectorData)return;const D=inspectorData;const pt={x:(selectedIssue.x+.5)/D.w,y:(selectedIssue.y+.5)/D.h};const r=Math.max(1.5/Math.min(D.w,D.h),.0015);brushStrokes.push({mode:mode==='delete'?'erase':'protect',r,pts:[pt]});redoStrokes=[];selectedIssue=null;$('surgeryPanel').style.display='none';render();runInspector();}
+$('surgeryDelete').onclick=()=>applySurgery('delete');$('surgeryProtect').onclick=()=>applySurgery('protect');$('surgeryIgnore').onclick=()=>{if(!selectedIssue)return;ignoredIssues.push(issueKey(selectedIssue.x,selectedIssue.y));selectedIssue=null;$('surgeryPanel').style.display='none';showIssue('isolated')};
+
+$('safeClean').onclick=()=>{if(!img){alert('Primero carga una imagen.');return}safeCleanup=true;lastCleanCount=0;render();runInspector();const n=lastCleanCount;$('cleanStatus').innerHTML=n?`✅ Limpieza aplicada · <b>${n.toLocaleString()} punto(s) aislado(s) eliminados</b> en el procesamiento actual. El mapa ya fue recalculado.`:'🟢 Limpieza aplicada · no quedaron píxeles 100% aislados para eliminar. El mapa ya fue recalculado.';};
+$('safeCleanOff').onclick=()=>{safeCleanup=false;lastCleanCount=0;$('cleanStatus').textContent='Desactivada · el PNG no se modifica.';render();if(inspectorData)runInspector()};
+$('reset').onclick=()=>{safeCleanup=false;lastCleanCount=0;$('cleanStatus').textContent='Desactivada · el PNG no se modifica.';brushStrokes=[];redoStrokes=[];ignoredIssues=[];selectedIssue=null;$('thr').value=32;$('soft').value=76;$('dot').value=minDotForDpi(+$('dpi').value);$('half').value=80;labels();render()};
+// V35: exportador PNG RGBA autocontenido, con DPI real y verificación integrada.
+let lastExportBlob=null,lastExportName='',lastExportMeta=null;
+function crc32(bytes){let c=0xffffffff;for(const b of bytes){c^=b;for(let k=0;k<8;k++)c=(c>>>1)^((c&1)?0xedb88320:0)}return (c^0xffffffff)>>>0}
+function adler32(bytes){let a=1,b=0;const MOD=65521;for(let i=0;i<bytes.length;i++){a=(a+bytes[i])%MOD;b=(b+a)%MOD}return ((b<<16)|a)>>>0}
+function u32be(n){return new Uint8Array([(n>>>24)&255,(n>>>16)&255,(n>>>8)&255,n&255])}
+function joinBytes(parts){let n=0;for(const p of parts)n+=p.length;const out=new Uint8Array(n);let o=0;for(const p of parts){out.set(p,o);o+=p.length}return out}
+function pngChunk(type,data){const t=new TextEncoder().encode(type),body=joinBytes([t,data]);return joinBytes([u32be(data.length),body,u32be(crc32(body))])}
+function zlibStored(raw){
+ // ZLIB válido sin compresión. Fallback universal cuando CompressionStream no existe.
+ const chunks=[new Uint8Array([0x78,0x01])];let pos=0;
+ while(pos<raw.length){const len=Math.min(65535,raw.length-pos),final=(pos+len)>=raw.length?1:0,nlen=(~len)&0xffff;const h=new Uint8Array([final,len&255,(len>>>8)&255,nlen&255,(nlen>>>8)&255]);chunks.push(h,raw.subarray(pos,pos+len));pos+=len}
+ chunks.push(u32be(adler32(raw)));return joinBytes(chunks)
+}
+async function zlibDeflate(raw){
+ if(typeof CompressionStream!=='undefined'){
+  try{const cs=new CompressionStream('deflate');const w=cs.writable.getWriter();w.write(raw);w.close();return new Uint8Array(await new Response(cs.readable).arrayBuffer())}catch(e){}
+ }
+ return zlibStored(raw)
+}
+async function encodePNG_RGBA(width,height,rgba,dpi){
+ const raw=new Uint8Array(height*(1+width*4));let ro=0,so=0;
+ for(let y=0;y<height;y++){raw[ro++]=0;raw.set(rgba.subarray(so,so+width*4),ro);ro+=width*4;so+=width*4}
+ const compressed=await zlibDeflate(raw);
+ const ihdr=new Uint8Array(13);ihdr.set(u32be(width),0);ihdr.set(u32be(height),4);ihdr[8]=8;ihdr[9]=6;ihdr[10]=0;ihdr[11]=0;ihdr[12]=0;
+ const ppm=Math.max(1,Math.round(dpi/0.0254)),phys=new Uint8Array(9);phys.set(u32be(ppm),0);phys.set(u32be(ppm),4);phys[8]=1;
+ return joinBytes([new Uint8Array([137,80,78,71,13,10,26,10]),pngChunk('IHDR',ihdr),pngChunk('pHYs',phys),pngChunk('IDAT',compressed),pngChunk('IEND',new Uint8Array(0))]);
+}
+function pngHeaderInfo(bytes){
+ const sig=bytes.length>26&&bytes[0]===137&&bytes[1]===80&&bytes[2]===78&&bytes[3]===71&&bytes[4]===13&&bytes[5]===10&&bytes[6]===26&&bytes[7]===10;
+ if(!sig)return {ok:false,reason:'La firma interna NO es PNG.'};
+ const type=String.fromCharCode(...bytes.slice(12,16));if(type!=='IHDR')return {ok:false,reason:'PNG sin IHDR válido.'};
+ const dv=new DataView(bytes.buffer,bytes.byteOffset,bytes.byteLength),w=dv.getUint32(16),h=dv.getUint32(20),depth=bytes[24],colorType=bytes[25];
+ return {ok:true,w,h,depth,colorType,rgba:colorType===6};
+}
+async function alphaStatsFromBlob(blob){
+ const url=URL.createObjectURL(blob);try{const im=new Image();await new Promise((res,rej)=>{im.onload=res;im.onerror=rej;im.src=url});const max=1400,sc=Math.min(1,max/Math.max(im.naturalWidth,im.naturalHeight)),w=Math.max(1,Math.round(im.naturalWidth*sc)),h=Math.max(1,Math.round(im.naturalHeight*sc)),c=document.createElement('canvas');c.width=w;c.height=h;const x=c.getContext('2d',{willReadFrequently:true,alpha:true});x.clearRect(0,0,w,h);x.drawImage(im,0,0,w,h);const d=x.getImageData(0,0,w,h).data;let zero=0,partial=0,solid=0;for(let i=3;i<d.length;i+=4){if(d[i]===0)zero++;else if(d[i]<255)partial++;else solid++}const n=w*h;return {zero,partial,solid,transparentPct:(zero/n*100),alphaPct:((zero+partial)/n*100)}}finally{URL.revokeObjectURL(url)}}
+async function verifyBlob(blob,label='Archivo'){
+ const bytes=new Uint8Array(await blob.arrayBuffer()),h=pngHeaderInfo(bytes);if(!h.ok)return {ok:false,text:`❌ ${label}: ${h.reason}`};
+ let stats;try{stats=await alphaStatsFromBlob(blob)}catch(e){return {ok:false,text:`❌ ${label}: es PNG, pero no pude decodificarlo: ${e.message}`}}
+ const sig=[...bytes.slice(0,8)].map(v=>v.toString(16).padStart(2,'0')).join(' ').toUpperCase();
+ const ok=h.rgba&&(stats.zero>0||stats.partial>0);return {ok,text:`${ok?'✅':'⚠️'} ${label}\nFirma: ${sig}\nPNG: ${h.w} × ${h.h}px · ${h.depth}-bit · tipo ${h.colorType}${h.rgba?' (RGBA)':''}\nTransparente 100%: ${stats.transparentPct.toFixed(1)}% · Con alfa total: ${stats.alphaPct.toFixed(1)}%`};
+}
+function safeFileToken(){return garmentHex==='#000000'?'NEGRA':garmentHex==='#ffffff'?'BLANCA':garmentHex.replace('#','').toUpperCase()}
+async function buildPrintBlob(){
+ if(!img)throw new Error('Primero carga una imagen.');
+ const cm=parseFloat($('cm').value),cmH=parseFloat($('cmH').value)||0,dpi=parseInt($('dpi').value,10);if(!(cm>0)||!(dpi>0))throw new Error('Medidas o DPI inválidos.');const outW=Math.round((cm/2.54)*dpi),outH=cmH>0?Math.round((cmH/2.54)*dpi):Math.round(outW*srcH/srcW);
+ if(outW*outH>65000000&&!confirm('La salida es muy grande y puede agotar la memoria del teléfono. ¿Continuar?'))throw new Error('Exportación cancelada.');
+ const source=document.createElement('canvas');processTo(source,false);const sc=source.getContext('2d',{willReadFrequently:true}),sd=sc.getImageData(0,0,source.width,source.height).data;let s0=0,sp=0;for(let i=3;i<sd.length;i+=4){if(sd[i]===0)s0++;else if(sd[i]<255)sp++}if(s0===0&&sp===0)throw new Error('No se generó transparencia real. Ajusta “Eliminar color base” o confirma la prenda.');
+ const temp=document.createElement('canvas');temp.width=outW;temp.height=outH;const tc=temp.getContext('2d',{willReadFrequently:true,alpha:true});tc.clearRect(0,0,outW,outH);tc.imageSmoothingEnabled=true;tc.imageSmoothingQuality='high';
+ // V36.29: con alto exacto, encaja el diseño proporcionalmente y centra sobre transparencia. Sin alto, conserva V36.28 1:1 al lienzo proporcional.
+ if(cmH>0){const scale=Math.min(outW/source.width,outH/source.height),dw=Math.max(1,Math.round(source.width*scale)),dh=Math.max(1,Math.round(source.height*scale)),dx=Math.round((outW-dw)/2),dy=Math.round((outH-dh)/2);tc.drawImage(source,0,0,source.width,source.height,dx,dy,dw,dh)}else{tc.drawImage(source,0,0,outW,outH)}
+ const td=tc.getImageData(0,0,outW,outH);let f0=0,fp=0;for(let i=3;i<td.data.length;i+=4){if(td.data[i]<3)td.data[i]=0;if(td.data[i]===0)f0++;else if(td.data[i]<255)fp++}if(f0===0&&fp===0)throw new Error('El resultado final perdió el canal alfa. No se guardó.');
+ const bytes=await encodePNG_RGBA(outW,outH,td.data,dpi),header=pngHeaderInfo(bytes);if(!header.ok||!header.rgba)throw new Error('El codificador no produjo un PNG RGBA válido.');if(header.w!==outW||header.h!==outH)throw new Error(`Error de tamaño: se pidió ${outW} × ${outH}px y el PNG quedó ${header.w} × ${header.h}px.`);
+ const blob=new Blob([bytes],{type:'image/png'}),sizeToken=cmH>0?`${String(cm).replace('.','p')}x${String(cmH).replace('.','p')}cm`:`${String(cm).replace('.','p')}cm`,name=`RDN_DTF_PRINT_${safeFileToken()}_${sizeToken}_${dpi}dpi_V36_31_STABLE.png`;return {blob,name,outW,outH,dpi,cm,cmH,alphaPct:(f0+fp)/(outW*outH)*100,zeroPct:f0/(outW*outH)*100};
+}
+$('download').onclick=async()=>{try{$('exportStatus').textContent='⏳ Construyendo y verificando PNG RGBA…';const r=await buildPrintBlob(),check=await verifyBlob(r.blob,'PNG antes de guardar');if(!check.ok)throw new Error(check.text);lastExportBlob=r.blob;lastExportName=r.name;lastExportMeta=r;if(window.RDNAndroid&&typeof window.RDNAndroid.saveBase64Png==='function'){const dataUrl=await new Promise((resolve,reject)=>{const fr=new FileReader();fr.onload=()=>resolve(fr.result);fr.onerror=reject;fr.readAsDataURL(r.blob)});window.RDNAndroid.saveBase64Png(String(dataUrl).split(',')[1],r.name)}else{const url=URL.createObjectURL(r.blob),a=document.createElement('a');a.href=url;a.download=r.name;a.type='image/png';a.style.display='none';document.body.appendChild(a);a.click();setTimeout(()=>{a.remove();URL.revokeObjectURL(url)},120000)};$('exportStatus').innerHTML=`✅ <b>${r.name}</b><br>${r.outW} × ${r.outH}px · ${r.dpi} DPI · RGBA<br>Alfa total: ${r.alphaPct.toFixed(1)}% · Transparencia 100%: ${r.zeroPct.toFixed(1)}%<br><span class="tiny">Busca en Descargas un archivo que empiece exactamente con RDN_DTF_PRINT_.</span>`;}catch(e){$('exportStatus').textContent='❌ '+e.message;alert('⚠️ '+e.message)}};
+$('verifyLast').onclick=async()=>{if(!lastExportBlob){alert('Todavía no has exportado un PNG en esta sesión.');return}const r=await verifyBlob(lastExportBlob,'Último exportado');$('exportStatus').textContent=r.text;alert(r.text)};
+const verifyFile=$('verifyFile');$('verifySaved').onclick=()=>{verifyFile.value='';verifyFile.click()};verifyFile.onchange=async e=>{const f=e.target.files[0];if(!f)return;const r=await verifyBlob(f,`Archivo guardado: ${f.name}`);$('exportStatus').textContent=r.text;alert(r.text)};
+
+function saveBlobAndroid(blob,name){return new Promise((resolve,reject)=>{if(window.RDNAndroid&&typeof window.RDNAndroid.saveBase64Png==='function'){const fr=new FileReader();fr.onload=()=>{window.RDNAndroid.saveBase64Png(String(fr.result).split(',')[1],name);resolve()};fr.onerror=reject;fr.readAsDataURL(blob)}else{const u=URL.createObjectURL(blob),a=document.createElement('a');a.href=u;a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(u),60000);resolve()}})}
+function proLabels(){ $('lpiV').textContent=$('lpi').value;$('angleV').textContent=$('angle').value+'°';$('blackLevelV').textContent=$('blackLevel').value;$('whiteLevelV').textContent=$('whiteLevel').value;$('gammaV').textContent=(+$('gamma').value/100).toFixed(2);$('haloV').textContent=$('halo').value;$('mockScaleV').textContent=$('mockScale').value+'%'}
+['lpi','angle','dotShape','blackLevel','whiteLevel','gamma','halo'].forEach(id=>$(id).addEventListener('input',()=>{proLabels();schedule()}));
+async function canvasPngBlob(c,dpi=300){const id=c.getContext('2d',{willReadFrequently:true}).getImageData(0,0,c.width,c.height);return new Blob([await encodePNG_RGBA(c.width,c.height,id.data,dpi)],{type:'image/png'})}
+$('exportUnderbase').onclick=async()=>{try{if(!img)throw Error('Primero carga una imagen.');$('underStatus').textContent='⏳ Construyendo base blanca al tamaño final…';const pr=await buildPrintBlob();const bmp=await createImageBitmap(pr.blob);const w=pr.outW,h=pr.outH;const src=document.createElement('canvas');src.width=w;src.height=h;const sc=src.getContext('2d',{willReadFrequently:true,alpha:true});sc.clearRect(0,0,w,h);sc.drawImage(bmp,0,0,w,h);if(bmp.close)bmp.close();const a=sc.getImageData(0,0,w,h).data,mask=new Uint8Array(w*h);for(let p=0;p<mask.length;p++)mask[p]=a[p*4+3]>5?1:0;let steps=Math.abs(Math.round(+$('underbase').value)),spread=+$('underbase').value>0,cur=mask;for(let s=0;s<steps;s++){let nx=new Uint8Array(cur);for(let y=1;y<h-1;y++)for(let x=1;x<w-1;x++){let p=y*w+x;if(spread&&!cur[p]&&(cur[p-1]||cur[p+1]||cur[p-w]||cur[p+w]))nx[p]=1;if(!spread&&cur[p]&&(!cur[p-1]||!cur[p+1]||!cur[p-w]||!cur[p+w]))nx[p]=0}cur=nx}const rgba=new Uint8ClampedArray(w*h*4),op=Math.round(Math.max(1,Math.min(100,+$('underOpacity').value))*2.55);for(let p=0;p<cur.length;p++){let i=p*4;rgba[i]=rgba[i+1]=rgba[i+2]=255;rgba[i+3]=cur[p]?op:0}const bytes=await encodePNG_RGBA(w,h,rgba,pr.dpi),blob=new Blob([bytes],{type:'image/png'});await saveBlobAndroid(blob,'RDN_DTF_UNDERBASE_'+($('underbase').value)+'px_'+w+'x'+h+'_'+pr.dpi+'dpi_V36_31_STABLE.png');$('underStatus').innerHTML='✅ Base blanca exportada.<br>'+w+' × '+h+'px · '+pr.dpi+' DPI · mismo lienzo que el PNG DTF.'}catch(e){$('underStatus').textContent='❌ '+e.message}};
+$('exportUpscale').onclick=async()=>{if(!img)return alert('Primero carga una imagen.');const f=+$('upscaleFactor').value,src=document.createElement('canvas');processTo(src,false),out=document.createElement('canvas');out.width=src.width*f;out.height=src.height*f;const g=out.getContext('2d');g.imageSmoothingEnabled=true;g.imageSmoothingQuality='high';g.drawImage(src,0,0,out.width,out.height);await saveBlobAndroid(await canvasPngBlob(out,+$('dpi').value),'RDN_DTF_UPSCALE_'+f+'X_V36_3_PRO.png')};
+function renderGangPreviewLegacy(){
+ try{
+  if(!gangImgs.length)return;
+  const dpi=300,W=Math.round(+$('gangWidth').value/2.54*dpi),gap=Math.round(+$('gangGap').value/25.4*dpi),maxItem=Math.round(W*.45);
+  let items=gangImgs.map(im=>{let z=Math.min(1,maxItem/im.width);return {im,w:Math.round(im.width*z),h:Math.round(im.height*z)}}).sort((a,b)=>b.h-a.h);
+  let x=gap,y=gap,rowH=0,pos=[];
+  for(const it of items){if(x+it.w+gap>W){x=gap;y+=rowH+gap;rowH=0}pos.push({...it,x,y});x+=it.w+gap;rowH=Math.max(rowH,it.h)}
+  const H=y+rowH+gap,c=$('gangPreview'),ip=$('gangPreviewImg'),z=Math.min(420/W,720/H,1);
+  c.width=Math.max(1,Math.round(W*z));c.height=Math.max(1,Math.round(H*z));
+  const g=c.getContext('2d');g.clearRect(0,0,c.width,c.height);
+  for(const p of pos)g.drawImage(p.im,p.x*z,p.y*z,p.w*z,p.h*z);
+  ip.onload=()=>{$('gangPreviewWrap').style.display='grid';ip.style.display='block';c.style.display='none'};
+  ip.src=c.toDataURL('image/jpeg',0.70);
+  $('gangStatus').innerHTML=`✅ ${gangImgs.length} diseño(s) · ${$('gangWidth').value} cm ancho × <b>${(H/dpi*2.54).toFixed(1)} cm largo</b>.<br><span class="tiny">Preview ligero. Exportación DTF sigue en PNG.</span>`;
+ }catch(e){$('gangStatus').textContent='⚠️ Diseños cargados. Preview: '+e.message}
+}
+let gangImgs=[];$('pickGang').onclick=()=>$('gangFiles').click();$('gangFiles').onchange=async e=>{gangImgs=[];for(const f of e.target.files){const u=URL.createObjectURL(f),im=new Image();await new Promise((r,j)=>{im.onload=r;im.onerror=j;im.src=u});gangImgs.push(im)}$('gangStatus').textContent=gangImgs.length+' diseño(s) cargados.';renderGangPreviewLegacy()};
+$('buildGang').onclick=async()=>{if(!gangImgs.length)return alert('Agrega diseños.');const dpi=300,W=Math.round(+$('gangWidth').value/2.54*dpi),gap=Math.round(+$('gangGap').value/25.4*dpi),maxItem=Math.round(W*.45);let items=gangImgs.map(im=>{let s=Math.min(1,maxItem/im.width);return {im,w:Math.round(im.width*s),h:Math.round(im.height*s)}}).sort((a,b)=>b.h-a.h),x=gap,y=gap,rowH=0,pos=[];for(const it of items){if(x+it.w+gap>W){x=gap;y+=rowH+gap;rowH=0}pos.push({...it,x,y});x+=it.w+gap;rowH=Math.max(rowH,it.h)}const H=y+rowH+gap,c=document.createElement('canvas');c.width=W;c.height=H;const g=c.getContext('2d');g.clearRect(0,0,W,H);for(const p of pos)g.drawImage(p.im,p.x,p.y,p.w,p.h);await saveBlobAndroid(await canvasPngBlob(c,dpi),'RDN_GANGSHEET_'+$('gangWidth').value+'cm_V36_3_PRO.png');$('gangStatus').textContent='✅ '+W+' × '+H+' px · '+(H/dpi*2.54).toFixed(1)+' cm de largo.'};
+function renderMock(){
+ const c=$('mockCanvas');c.width=900;c.height=1050;const g=c.getContext('2d');
+ const col=$('mockColor').value;g.fillStyle='#d8d9dc';g.fillRect(0,0,c.width,c.height);
+ // sombra suave detrás de la prenda
+ g.save();g.shadowColor='rgba(0,0,0,.30)';g.shadowBlur=28;g.shadowOffsetY=18;
+ // silueta realista: hombros inclinados, mangas caídas, cintura con leve curva
+ const shirt=new Path2D();shirt.moveTo(315,150);shirt.bezierCurveTo(270,158,220,178,178,208);shirt.lineTo(72,300);shirt.bezierCurveTo(60,312,62,330,78,342);shirt.lineTo(177,423);shirt.bezierCurveTo(191,433,207,426,218,414);shirt.lineTo(242,385);shirt.bezierCurveTo(238,510,232,720,245,918);shirt.bezierCurveTo(330,940,570,940,655,918);shirt.bezierCurveTo(668,720,662,510,658,385);shirt.lineTo(682,414);shirt.bezierCurveTo(693,426,709,433,723,423);shirt.lineTo(822,342);shirt.bezierCurveTo(838,330,840,312,828,300);shirt.lineTo(722,208);shirt.bezierCurveTo(680,178,630,158,585,150);shirt.bezierCurveTo(552,188,510,205,450,205);shirt.bezierCurveTo(390,205,348,188,315,150);shirt.closePath();
+ g.fillStyle=col;g.fill(shirt);g.restore();
+ // volumen de tela y costuras
+ const shade=g.createLinearGradient(220,0,680,0);shade.addColorStop(0,'rgba(0,0,0,.22)');shade.addColorStop(.24,'rgba(255,255,255,.07)');shade.addColorStop(.5,'rgba(255,255,255,.13)');shade.addColorStop(.76,'rgba(255,255,255,.06)');shade.addColorStop(1,'rgba(0,0,0,.24)');g.fillStyle=shade;g.fill(shirt);
+ g.strokeStyle='rgba(255,255,255,.14)';g.lineWidth=3;g.beginPath();g.moveTo(315,151);g.bezierCurveTo(350,198,397,220,450,220);g.bezierCurveTo(503,220,550,198,585,151);g.stroke();
+ // cuello doble con hueco real
+ g.fillStyle='rgba(0,0,0,.32)';g.beginPath();g.ellipse(450,177,92,54,0,0,Math.PI*2);g.fill();g.fillStyle='#d8d9dc';g.beginPath();g.ellipse(450,169,67,38,0,0,Math.PI*2);g.fill();
+ // pliegues discretos
+ g.strokeStyle='rgba(0,0,0,.12)';g.lineWidth=5;for(const x of [300,355,545,600]){g.beginPath();g.moveTo(x,330);g.bezierCurveTo(x+(x<450?18:-18),520,x+(x<450?8:-8),730,x+(x<450?20:-20),900);g.stroke()}
+ if(img){const processed=document.createElement('canvas');processTo(processed,true);const sc=+$('mockScale').value/100,maxW=390*sc/0.55,maxH=500*sc/0.55,s=Math.min(maxW/processed.width,maxH/processed.height),ww=processed.width*s,hh=processed.height*s;g.save();g.beginPath();g.rect(250,245,400,610);g.clip();g.drawImage(processed,(900-ww)/2,285,ww,hh);g.restore()}
+}
+['mockColor','mockSide','mockScale'].forEach(id=>$(id).addEventListener('input',()=>{proLabels();renderMock()}));$('exportMock').onclick=async()=>{renderMock();await saveBlobAndroid(await canvasPngBlob($('mockCanvas'),150),'RDN_MOCKUP_V36_3_PRO.png')};
+const oldRender=render;render=function(){oldRender();renderMock()};proLabels();renderMock();
+
+applyDpiGuard(true);labels();
+
+// V36.9 PRO AUTO: checkbox real de Base blanca + Choke/Spread.
+if($('autoPro')) $('autoPro').onclick=()=>{
+ if(!img){alert('Primero carga una imagen.');return}
+ const ac=document.createElement('canvas'),sc=Math.min(1,520/Math.max(srcW,srcH));
+ ac.width=Math.max(1,Math.round(srcW*sc));ac.height=Math.max(1,Math.round(srcH*sc));
+ const ax=ac.getContext('2d',{willReadFrequently:true});ax.drawImage(img,0,0,ac.width,ac.height);
+ const d=ax.getImageData(0,0,ac.width,ac.height).data;let dark=0,light=0,n=0;
+ for(let i=0;i<d.length;i+=16){if(d[i+3]<20)continue;const lum=.2126*d[i]+.7152*d[i+1]+.0722*d[i+2];dark+=lum<55;light+=lum>210;n++}
+ const detail=n?Math.min(1,(dark+light)/n):.5;
+ const set=(id,v)=>{const e=$(id);if(!e)return;let x=Number(v);if(e.min!==''&&isFinite(+e.min))x=Math.max(x,+e.min);if(e.max!==''&&isFinite(+e.max))x=Math.min(x,+e.max);e.value=String(x);e.dispatchEvent(new Event('input',{bubbles:true}));e.dispatchEvent(new Event('change',{bubbles:true}))};
+ set('lpi',detail>.52?45:40);set('angle',22.5);
+ if($('dotShape')){const o=[...$('dotShape').options].find(o=>/round|redond/i.test(o.value+' '+o.textContent));if(o)$('dotShape').value=o.value;$('dotShape').dispatchEvent(new Event('change',{bubbles:true}))}
+ set('blackLevel',detail>.55?4:3);set('whiteLevel',detail>.55?250:252);
+ const ge=$('gamma');if(ge){const gmax=Number(ge.max||2);set('gamma',gmax>10?(detail>.55?104:102):(detail>.55?1.04:1.02))}
+ set('halo',detail>.55?5:6);
+ const ub=$('underbaseEnabled');if(ub){ub.checked=true;ub.dispatchEvent(new Event('input',{bubbles:true}));ub.dispatchEvent(new Event('change',{bubbles:true}))}
+ set('underbase',detail>.55?-1:-2);
+ set('underOpacity',100);
+ if(typeof labels==='function')labels();if(typeof render==='function')render();
+ const ok=!!($('underbaseEnabled')&&$('underbaseEnabled').checked);
+ $('autoProStatus').innerHTML=ok?'✅ PRO automático completo · Base blanca ACTIVADA · Choke/Spread aplicado.':'⚠️ Underbase no pudo activarse.';
+ if(gangImgs.length) updateGangPlan();
+};
+</script></body></html>
